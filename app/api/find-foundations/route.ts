@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     console.log(`[${new Date().toISOString()}] Querying Pinecone for matches`);
     const queryResponse = await index
       .namespace("main")
-      .query({ vector: embedding, topK: 50 });
+      .query({ vector: embedding, topK: 300 });
     console.log(
       `[${new Date().toISOString()}] Found ${
         queryResponse.matches.length
