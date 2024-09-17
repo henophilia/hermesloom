@@ -32,7 +32,7 @@ export async function POST(req: Request) {
     // Find suitable matches using Pinecone
     const queryResponse = await index
       .namespace("main")
-      .query({ vector: embedding, topK: 100 });
+      .query({ vector: embedding, topK: 300 });
 
     // Query MongoDB for foundation details
     await mongoClient.connect();
