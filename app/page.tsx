@@ -254,7 +254,7 @@ export default function Home() {
             loading={transforming}
             className="mt-4"
           >
-            Transform to Foundation purpose
+            Transform to foundation purpose
           </Button>
         </div>
         <div className="w-1/2">
