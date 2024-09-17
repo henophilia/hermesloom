@@ -56,4 +56,4 @@ MIT
 
 ## Disclaimer
 
-This readme was written using claude-3.5-sonnet within [Cursor](https://www.cursor.com/).
+This readme and most of this project's code was written using claude-3.5-sonnet within [Cursor](https://www.cursor.com/).
