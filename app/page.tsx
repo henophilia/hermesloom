@@ -225,7 +225,7 @@ export default function Home() {
 
   return (
     <div className="p-8">
-      <div className="flex justify-between items-start mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-start mb-4">
         <Title level={2} className="m-0">
           German Foundations
         </Title>
@@ -233,6 +233,7 @@ export default function Home() {
           href="https://github.com/henophilia/funding.henophilia.org"
           target="_blank"
           rel="noopener noreferrer"
+          className="mt-2 sm:mt-0"
         >
           <img
             src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
@@ -240,8 +241,8 @@ export default function Home() {
           />
         </a>
       </div>
-      <div className="flex space-x-4">
-        <div className="w-1/2">
+      <div className="flex flex-col sm:flex-row sm:space-x-4">
+        <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
           <Input.TextArea
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
@@ -252,12 +253,12 @@ export default function Home() {
             type="primary"
             onClick={handleTransformDescription}
             loading={transforming}
-            className="mt-4"
+            className="mt-4 w-full sm:w-auto"
           >
             Transform to foundation purpose
           </Button>
         </div>
-        <div className="w-1/2">
+        <div className="w-full sm:w-1/2">
           <Input.TextArea
             value={foundationPurpose}
             onChange={(e) => setFoundationPurpose(e.target.value)}
@@ -268,7 +269,7 @@ export default function Home() {
             type="primary"
             onClick={handleFindFoundations}
             loading={loading}
-            className="mt-4"
+            className="mt-4 w-full sm:w-auto"
             disabled={!foundationPurpose}
           >
             Find relevant foundations
