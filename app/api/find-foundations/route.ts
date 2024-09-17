@@ -3,6 +3,8 @@ import { OpenAI } from "openai";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { MongoClient } from "mongodb";
 
+import { Foundation } from "../../types";
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const pinecone = new Pinecone({
   apiKey: process.env.PINECONE_API_KEY as string,
@@ -41,7 +43,7 @@ export async function POST(req: Request) {
       .find({ internalId: { $in: foundationIds } })
       .toArray();
 
-    const foundationsByInternalId = new Map<string, any>();
+    const foundationsByInternalId = new Map<string, Foundation>();
     foundations.forEach((f) => {
       foundationsByInternalId.set(f.internalId, f);
     });

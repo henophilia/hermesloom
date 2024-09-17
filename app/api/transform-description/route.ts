@@ -17,7 +17,7 @@ export async function POST(req: Request) {
       ],
     });
     const transformedPurpose =
-      purposeResponse.choices[0].message.content?.trim()!;
+      purposeResponse.choices[0].message.content?.trim() ?? "";
 
     return NextResponse.json({ transformedPurpose });
   } catch (error) {

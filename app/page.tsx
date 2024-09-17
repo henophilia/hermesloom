@@ -3,33 +3,9 @@
 import React, { useState } from "react";
 import { Typography, Input, Button, Table, Modal, Tooltip } from "antd";
 import { EyeOutlined, TranslationOutlined } from "@ant-design/icons";
+import { Foundation, SearchResponse } from "./types";
 
 const { Title, Text } = Typography;
-
-export type Foundation = {
-  internalId: string;
-  stiftungsId: string;
-  name: string;
-  contact: {
-    address: string[];
-    phone: string[];
-    fax: string[];
-    emails: string[];
-    urls: string[];
-  };
-  content: {
-    title: string;
-    lines: string[];
-  }[];
-  purpose?: string;
-  score: number;
-};
-
-type SearchResponse = {
-  foundations: Foundation[];
-  executionTime: number;
-  totalVectors: number;
-};
 
 export default function Home() {
   const [projectDescription, setProjectDescription] = useState("");
@@ -147,7 +123,7 @@ export default function Home() {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: Foundation) => (
+      render: (_: unknown, record: Foundation) => (
         <div className="flex space-x-2">
           <Tooltip title="View Details">
             <Button
