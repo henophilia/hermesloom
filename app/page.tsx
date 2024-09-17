@@ -245,7 +245,7 @@ export default function Home() {
           <Input.TextArea
             value={projectDescription}
             onChange={(e) => setProjectDescription(e.target.value)}
-            placeholder="Enter your project description"
+            placeholder="Enter your project description in any language"
             rows={4}
           />
           <Button
@@ -254,14 +254,14 @@ export default function Home() {
             loading={transforming}
             className="mt-4"
           >
-            Transform to Foundation Purpose
+            Transform to Foundation purpose
           </Button>
         </div>
         <div className="w-1/2">
           <Input.TextArea
             value={foundationPurpose}
             onChange={(e) => setFoundationPurpose(e.target.value)}
-            placeholder="Foundation purpose will appear here"
+            placeholder="Foundation purpose in German will appear here"
             rows={4}
           />
           <Button
@@ -271,7 +271,7 @@ export default function Home() {
             className="mt-4"
             disabled={!foundationPurpose}
           >
-            Find Relevant Foundations
+            Find relevant foundations
           </Button>
         </div>
       </div>
