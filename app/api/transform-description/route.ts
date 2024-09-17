@@ -6,6 +6,11 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 export async function POST(req: Request) {
   const { projectDescription } = await req.json();
 
+  // Log the input
+  console.log(
+    `[${new Date().toISOString()}] Received project description: ${projectDescription}`
+  );
+
   try {
     const purposeResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
