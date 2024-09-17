@@ -1,5 +1,5 @@
 {
-  "name": "nextjs",
+  "name": "@henophilia/funding",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,18 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.1",
+    "@pinecone-database/pinecone": "^3.0.3",
+    "antd": "^5.20.6",
+    "mongodb": "^6.9.0",
+    "next": "14.2.11",
+    "openai": "^4.62.0",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.11"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.11",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.11"
+    "typescript": "^5"
   }
 }

@@ -1,101 +1,333 @@
-import Image from "next/image";
+"use client";
+
+import React, { useState } from "react";
+import { Typography, Input, Button, Table, Modal, Tooltip } from "antd";
+import { EyeOutlined, TranslationOutlined } from "@ant-design/icons";
+
+const { Title, Text } = Typography;
+
+export type Foundation = {
+  internalId: string;
+  stiftungsId: string;
+  name: string;
+  contact: {
+    address: string[];
+    phone: string[];
+    fax: string[];
+    emails: string[];
+    urls: string[];
+  };
+  content: {
+    title: string;
+    lines: string[];
+  }[];
+  purpose?: string;
+  score: number;
+};
+
+type SearchResponse = {
+  foundations: Foundation[];
+  executionTime: number;
+  totalVectors: number;
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [projectDescription, setProjectDescription] = useState("");
+  const [foundationPurpose, setFoundationPurpose] = useState("");
+  const [searchResponse, setSearchResponse] = useState<SearchResponse | null>(
+    null
+  );
+  const [loading, setLoading] = useState(false);
+  const [transforming, setTransforming] = useState(false);
+  const [selectedFoundation, setSelectedFoundation] =
+    useState<Foundation | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [translatingPurpose, setTranslatingPurpose] = useState<string | null>(
+    null
+  );
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const handleTransformDescription = async () => {
+    setTransforming(true);
+    try {
+      const response = await fetch("/api/transform-description", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectDescription }),
+      });
+      const data = await response.json();
+      setFoundationPurpose(data.transformedPurpose);
+    } catch (error) {
+      console.error("Error transforming description:", error);
+    }
+    setTransforming(false);
+  };
+
+  const handleFindFoundations = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("/api/find-foundations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ foundationPurpose }),
+      });
+      const data: SearchResponse = await response.json();
+      setSearchResponse(data);
+    } catch (error) {
+      console.error("Error finding foundations:", error);
+    }
+    setLoading(false);
+  };
+
+  const handleTranslatePurpose = async (purpose: string) => {
+    setTranslatingPurpose(purpose);
+    try {
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: purpose }),
+      });
+      const data = await response.json();
+
+      // Update the foundation's purpose with the translated text
+      setSearchResponse((prevResponse) => {
+        if (!prevResponse) return null;
+        return {
+          ...prevResponse,
+          foundations: prevResponse.foundations.map((foundation) =>
+            foundation.purpose === purpose
+              ? { ...foundation, purpose: data.translatedText }
+              : foundation
+          ),
+        };
+      });
+    } catch (error) {
+      console.error("Error translating purpose:", error);
+    }
+    setTranslatingPurpose(null);
+  };
+
+  const showFoundationDetails = (foundation: Foundation) => {
+    setSelectedFoundation(foundation);
+    setIsModalVisible(true);
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "URLs",
+      dataIndex: "contact",
+      key: "urls",
+      render: (contact: Foundation["contact"]) => (
+        <>
+          {contact.urls.map((url, index) => (
+            <div key={index}>
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url}
+              </a>
+            </div>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: "Purpose",
+      dataIndex: "purpose",
+      key: "purpose",
+    },
+    {
+      title: "Score",
+      dataIndex: "score",
+      key: "score",
+      render: (score: number) => score.toFixed(4),
+    },
+    {
+      title: "Actions",
+      key: "actions",
+      render: (_: any, record: Foundation) => (
+        <div className="flex space-x-2">
+          <Tooltip title="View Details">
+            <Button
+              icon={<EyeOutlined />}
+              onClick={() => showFoundationDetails(record)}
+              size="small"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </Tooltip>
+          <Tooltip title="Translate Purpose">
+            <Button
+              icon={<TranslationOutlined />}
+              onClick={() => handleTranslatePurpose(record.purpose || "")}
+              loading={translatingPurpose === record.purpose}
+              size="small"
+            />
+          </Tooltip>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
+      ),
+    },
+  ];
+
+  const renderFoundationDetails = (foundation: Foundation) => (
+    <div>
+      <Title level={3}>Basic Information</Title>
+      <p>
+        <strong>Internal ID:</strong> {foundation.internalId}
+      </p>
+      <p>
+        <strong>Stiftungs ID:</strong> {foundation.stiftungsId}
+      </p>
+      <p>
+        <strong>Name:</strong> {foundation.name}
+      </p>
+      <p>
+        <strong>Purpose:</strong> {foundation.purpose}
+      </p>
+      <p>
+        <strong>Score:</strong> {foundation.score.toFixed(4)}
+      </p>
+
+      <Title level={3} className="mt-4">
+        Contact Information
+      </Title>
+      {foundation.contact.address.length > 0 && (
+        <p>
+          <strong>Address:</strong> {foundation.contact.address.join(", ")}
+        </p>
+      )}
+      {foundation.contact.phone.length > 0 && (
+        <p>
+          <strong>Phone:</strong> {foundation.contact.phone.join(", ")}
+        </p>
+      )}
+      {foundation.contact.fax.length > 0 && (
+        <p>
+          <strong>Fax:</strong> {foundation.contact.fax.join(", ")}
+        </p>
+      )}
+      {foundation.contact.emails.length > 0 && (
+        <p>
+          <strong>Emails:</strong>{" "}
+          {foundation.contact.emails.map((email, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && ", "}
+              <a href={`mailto:${email}`}>{email}</a>
+            </React.Fragment>
+          ))}
+        </p>
+      )}
+      {foundation.contact.urls.length > 0 && (
+        <p>
+          <strong>URLs:</strong>{" "}
+          {foundation.contact.urls.map((url, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && ", "}
+              <a href={url} target="_blank" rel="noopener noreferrer">
+                {url}
+              </a>
+            </React.Fragment>
+          ))}
+        </p>
+      )}
+
+      <Title level={3} className="mt-4">
+        Additional Content
+      </Title>
+      {foundation.content.map((item, index) => (
+        <div key={index} className="mb-4">
+          <Title level={4}>{item.title}</Title>
+          <ul>
+            {item.lines.map((line, lineIndex) => (
+              <li key={lineIndex}>{line}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="p-8">
+      <div className="flex justify-between items-start mb-4">
+        <Title level={2} className="m-0">
+          German Foundations
+        </Title>
         <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://github.com/henophilia/funding.henophilia.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <img
+            src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
+            alt="GitHub"
           />
-          Learn
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+      </div>
+      <div className="flex space-x-4">
+        <div className="w-1/2">
+          <Input.TextArea
+            value={projectDescription}
+            onChange={(e) => setProjectDescription(e.target.value)}
+            placeholder="Enter your project description"
+            rows={4}
           />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+          <Button
+            type="primary"
+            onClick={handleTransformDescription}
+            loading={transforming}
+            className="mt-4"
+          >
+            Transform to Foundation Purpose
+          </Button>
+        </div>
+        <div className="w-1/2">
+          <Input.TextArea
+            value={foundationPurpose}
+            onChange={(e) => setFoundationPurpose(e.target.value)}
+            placeholder="Foundation purpose will appear here"
+            rows={4}
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <Button
+            type="primary"
+            onClick={handleFindFoundations}
+            loading={loading}
+            className="mt-4"
+            disabled={!foundationPurpose}
+          >
+            Find Relevant Foundations
+          </Button>
+        </div>
+      </div>
+      {searchResponse && (
+        <>
+          <div className="mt-8 mb-4">
+            <Text>
+              Search execution time: {searchResponse.executionTime.toFixed(2)}{" "}
+              seconds
+            </Text>
+            <br />
+            <Text>
+              Total foundations in database: {searchResponse.totalVectors}
+            </Text>
+          </div>
+          <Table
+            dataSource={searchResponse.foundations}
+            columns={columns}
+            rowKey="internalId"
+          />
+        </>
+      )}
+      <Modal
+        title={<Title level={2}>Foundation Details</Title>}
+        open={isModalVisible}
+        onOk={() => setIsModalVisible(false)}
+        onCancel={() => setIsModalVisible(false)}
+        width={800}
+        cancelButtonProps={{ style: { display: "none" } }}
+      >
+        {selectedFoundation && renderFoundationDetails(selectedFoundation)}
+      </Modal>
     </div>
   );
 }
