@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
     const foundationsByInternalId = new Map<string, Foundation>();
     foundations.forEach((f) => {
-      foundationsByInternalId.set(f.internalId, f);
+      foundationsByInternalId.set(f.internalId, f as unknown as Foundation);
     });
 
     const endTime = Date.now();
