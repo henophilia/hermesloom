@@ -1,6 +1,8 @@
-# German Foundations Funding Finder
+# Enhancing Accessibility to Non-Profit Funding Through AI
 
-This project is a web application designed to help users find relevant German foundations for their projects. It leverages advanced natural language processing and vector search technologies to match project descriptions with foundation purposes.
+Currently, this project is a web application designed to help users find relevant German foundations for their projects. It leverages advanced natural language processing and vector search technologies to match project descriptions with foundation purposes.
+
+Please see https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit for an overview of the roadmap and long-term goals and intentions of this project.
 
 ## Features
 
