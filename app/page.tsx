@@ -229,17 +229,28 @@ export default function Home() {
         <Title level={2} className="m-0">
           German Foundations
         </Title>
-        <a
-          href="https://github.com/henophilia/funding.henophilia.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2 sm:mt-0"
-        >
-          <img
-            src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
-            alt="GitHub"
-          />
-        </a>
+        <div className="flex flex-col sm:flex-row sm:space-x-2 mt-2 sm:mt-0">
+          <a
+            href="https://github.com/henophilia/funding.henophilia.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
+              alt="GitHub"
+            />
+          </a>
+          <a
+            href="https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://img.shields.io/badge/Strategic%20Proposal-4285F4?style=flat&logo=google-slides&logoColor=white"
+              alt="Roadmap"
+            />
+          </a>
+        </div>
       </div>
       <div className="flex flex-col sm:flex-row sm:space-x-4">
         <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
