@@ -1,15 +1,12 @@
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
+import { MongoClient } from "mongodb";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const mongoClient = new MongoClient(process.env.MONGODB_URI as string);
 
 export async function POST(req: Request) {
-  const { projectDescription } = await req.json();
-
-  // Log the input
-  console.log(
-    `[${new Date().toISOString()}] Received project description: ${projectDescription}`
-  );
+  const { projectDescription, saveDescription } = await req.json();
 
   try {
     const purposeResponse = await openai.chat.completions.create({
@@ -21,15 +18,29 @@ export async function POST(req: Request) {
         },
       ],
     });
+
     const transformedPurpose =
       purposeResponse.choices[0].message.content?.trim() ?? "";
 
+    // Save the description if requested
+    if (saveDescription) {
+      await mongoClient.connect();
+      const db = mongoClient.db("henophilia");
+      const descriptionsCollection = db.collection("project-descriptions");
+      await descriptionsCollection.insertOne({
+        description: projectDescription,
+        timestamp: new Date(),
+      });
+    }
+
     return NextResponse.json({ transformedPurpose });
   } catch (error) {
-    console.error("Error transforming description:", error);
+    console.error("Error processing request:", error);
     return NextResponse.json(
-      { error: "An error occurred while transforming the description" },
+      { error: "An error occurred while processing your request" },
       { status: 500 }
     );
+  } finally {
+    await mongoClient.close();
   }
 }

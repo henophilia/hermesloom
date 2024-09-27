@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { Typography, Input, Button, Table, Modal, Tooltip } from "antd";
+import {
+  Typography,
+  Input,
+  Button,
+  Table,
+  Modal,
+  Tooltip,
+  Checkbox,
+} from "antd";
 import { EyeOutlined, TranslationOutlined } from "@ant-design/icons";
 import { Foundation, SearchResponse } from "./types";
 
@@ -21,6 +29,7 @@ export default function Home() {
   const [translatingPurpose, setTranslatingPurpose] = useState<string | null>(
     null
   );
+  const [saveDescription, setSaveDescription] = useState(false);
 
   const handleTransformDescription = async () => {
     setTransforming(true);
@@ -28,7 +37,7 @@ export default function Home() {
       const response = await fetch("/api/transform-description", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectDescription }),
+        body: JSON.stringify({ projectDescription, saveDescription }),
       });
       const data = await response.json();
       setFoundationPurpose(data.transformedPurpose);
@@ -234,6 +243,7 @@ export default function Home() {
             href="https://github.com/henophilia/funding.henophilia.org"
             target="_blank"
             rel="noopener noreferrer"
+            style={{ marginBottom: "0.25rem" }}
           >
             <img
               src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
@@ -260,11 +270,22 @@ export default function Home() {
             placeholder="Enter your project description in any language"
             rows={4}
           />
+          <div className="mt-2 mb-2">
+            <Checkbox
+              checked={saveDescription}
+              onChange={(e) => setSaveDescription(e.target.checked)}
+            >
+              Check this box to allow us to save your input project description
+              in our database, so that we can use it to improve this service.
+              Please contact synergies@henophilia.org for co-creation and
+              collaboration.
+            </Checkbox>
+          </div>
           <Button
             type="primary"
             onClick={handleTransformDescription}
             loading={transforming}
-            className="mt-4 w-full sm:w-auto"
+            className="mt-2 w-full sm:w-auto"
           >
             Transform to foundation purpose
           </Button>
