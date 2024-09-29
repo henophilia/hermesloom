@@ -2,18 +2,29 @@
 
 import React, { useState } from "react";
 import {
-  Typography,
-  Input,
   Button,
-  Table,
-  Modal,
-  Tooltip,
   Checkbox,
-} from "antd";
+  Link,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  getKeyValue,
+  Textarea,
+  Tooltip,
+  useDisclosure,
+} from "@nextui-org/react";
 import { EyeOutlined, TranslationOutlined } from "@ant-design/icons";
-import { Foundation, SearchResponse } from "./types";
+import { Foundation, SearchResponse } from "@/types";
 
-const { Title, Text } = Typography;
+import { siteConfig } from "@/config/site";
 
 export default function Home() {
   const [projectDescription, setProjectDescription] = useState("");
@@ -25,7 +36,11 @@ export default function Home() {
   const [transforming, setTransforming] = useState(false);
   const [selectedFoundation, setSelectedFoundation] =
     useState<Foundation | null>(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const {
+    isOpen: modalIsOpen,
+    onOpen: modalOnOpen,
+    onOpenChange: modalOnOpenChange,
+  } = useDisclosure();
   const [translatingPurpose, setTranslatingPurpose] = useState<string | null>(
     null
   );
@@ -93,7 +108,7 @@ export default function Home() {
 
   const showFoundationDetails = (foundation: Foundation) => {
     setSelectedFoundation(foundation);
-    setIsModalVisible(true);
+    modalOnOpen();
   };
 
   const columns = [
@@ -109,11 +124,9 @@ export default function Home() {
       render: (contact: Foundation["contact"]) => (
         <>
           {contact.urls.map((url, index) => (
-            <div key={index}>
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                {url}
-              </a>
-            </div>
+            <Link href={url} isExternal key={index} className="text-md">
+              {url}
+            </Link>
           ))}
         </>
       ),
@@ -124,30 +137,34 @@ export default function Home() {
       key: "purpose",
     },
     {
-      title: "Score",
+      title: "Relevance",
       dataIndex: "score",
       key: "score",
-      render: (score: number) => score.toFixed(4),
+      render: (score: number) => (score * 100).toFixed(2) + "%",
     },
     {
       title: "Actions",
       key: "actions",
       render: (_: unknown, record: Foundation) => (
         <div className="flex space-x-2">
-          <Tooltip title="View Details">
+          <Tooltip content="View details">
             <Button
-              icon={<EyeOutlined />}
+              isIconOnly
               onClick={() => showFoundationDetails(record)}
-              size="small"
-            />
+              size="sm"
+            >
+              <EyeOutlined />
+            </Button>
           </Tooltip>
-          <Tooltip title="Translate Purpose">
+          <Tooltip content="Translate purpose">
             <Button
-              icon={<TranslationOutlined />}
+              isIconOnly
               onClick={() => handleTranslatePurpose(record.purpose || "")}
-              loading={translatingPurpose === record.purpose}
-              size="small"
-            />
+              isLoading={translatingPurpose === record.purpose}
+              size="sm"
+            >
+              <TranslationOutlined />
+            </Button>
           </Tooltip>
         </div>
       ),
@@ -156,7 +173,7 @@ export default function Home() {
 
   const renderFoundationDetails = (foundation: Foundation) => (
     <div>
-      <Title level={3}>Basic Information</Title>
+      <h3 className="text-2xl font-bold">Basic information</h3>
       <p>
         <strong>Internal ID:</strong> {foundation.internalId}
       </p>
@@ -170,12 +187,10 @@ export default function Home() {
         <strong>Purpose:</strong> {foundation.purpose}
       </p>
       <p>
-        <strong>Score:</strong> {foundation.score.toFixed(4)}
+        <strong>Score:</strong> {(foundation.score * 100).toFixed(2)}%
       </p>
 
-      <Title level={3} className="mt-4">
-        Contact Information
-      </Title>
+      <h3 className="text-2xl font-bold mt-4">Contact information</h3>
       {foundation.contact.address.length > 0 && (
         <p>
           <strong>Address:</strong> {foundation.contact.address.join(", ")}
@@ -208,20 +223,18 @@ export default function Home() {
           {foundation.contact.urls.map((url, index) => (
             <React.Fragment key={index}>
               {index > 0 && ", "}
-              <a href={url} target="_blank" rel="noopener noreferrer">
+              <Link href={url} isExternal>
                 {url}
-              </a>
+              </Link>
             </React.Fragment>
           ))}
         </p>
       )}
 
-      <Title level={3} className="mt-4">
-        Additional Content
-      </Title>
+      <h3 className="text-2xl font-bold mt-4">Additional content</h3>
       {foundation.content.map((item, index) => (
         <div key={index} className="mb-4">
-          <Title level={4}>{item.title}</Title>
+          <h4 className="text-xl font-bold">{item.title}</h4>
           <ul>
             {item.lines.map((line, lineIndex) => (
               <li key={lineIndex}>{line}</li>
@@ -233,76 +246,69 @@ export default function Home() {
   );
 
   return (
-    <div className="p-8">
+    <>
       <div className="flex flex-col sm:flex-row justify-between items-start mb-4">
-        <Title level={2} className="m-0">
-          German Foundations
-        </Title>
-        <div className="flex flex-col sm:flex-row sm:space-x-2 mt-2 sm:mt-0">
-          <a
-            href="https://github.com/henophilia/funding.henophilia.org"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ marginBottom: "0.25rem" }}
-          >
+        <h1>German Foundations</h1>
+        <div className="flex flex-row space-x-2">
+          <Link isExternal href={siteConfig.links.github}>
             <img
               src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white"
               alt="GitHub"
             />
-          </a>
-          <a
-            href="https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          </Link>
+          <Link isExternal href={siteConfig.links.strategicProposal}>
             <img
-              src="https://img.shields.io/badge/Strategic%20Proposal-4285F4?style=flat&logo=google-slides&logoColor=white"
-              alt="Roadmap"
+              src="https://img.shields.io/badge/Strategic%20proposal-4285F4?style=flat&logo=google-slides&logoColor=white"
+              alt="Strategic proposal"
             />
-          </a>
+          </Link>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row sm:space-x-4">
+      <div className="flex flex-col flex-grow sm:flex-row sm:space-x-4">
         <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
-          <Input.TextArea
+          <Textarea
             value={projectDescription}
-            onChange={(e) => setProjectDescription(e.target.value)}
+            onValueChange={setProjectDescription}
+            label="Project description"
             placeholder="Enter your project description in any language"
-            rows={4}
           />
-          <div className="mt-2 mb-2">
+
+          <div className="mt-4">
             <Checkbox
-              checked={saveDescription}
-              onChange={(e) => setSaveDescription(e.target.checked)}
+              isSelected={saveDescription}
+              onValueChange={setSaveDescription}
             >
-              Check this box to allow us to save your input project description
-              in our database, so that we can use it to improve this service.
-              Please contact synergies@henophilia.org for co-creation and
-              collaboration.
+              <p className="text-xs">
+                Check this box to allow us to save your input project
+                description in our database, so that we can use it to improve
+                this service. Please contact synergies@henophilia.org for
+                co-creation and collaboration.
+              </p>
             </Checkbox>
           </div>
+
           <Button
-            type="primary"
+            color="primary"
             onClick={handleTransformDescription}
-            loading={transforming}
-            className="mt-2 w-full sm:w-auto"
+            isLoading={transforming}
+            className="mt-4 w-full sm:w-auto"
           >
             Transform to foundation purpose
           </Button>
         </div>
         <div className="w-full sm:w-1/2">
-          <Input.TextArea
+          <Textarea
             value={foundationPurpose}
-            onChange={(e) => setFoundationPurpose(e.target.value)}
+            onValueChange={setFoundationPurpose}
+            label="Foundation purpose"
             placeholder="Foundation purpose in German will appear here"
-            rows={4}
           />
           <Button
-            type="primary"
+            color="primary"
             onClick={handleFindFoundations}
-            loading={loading}
+            isLoading={loading}
             className="mt-4 w-full sm:w-auto"
-            disabled={!foundationPurpose}
+            isDisabled={!foundationPurpose}
           >
             Find relevant foundations
           </Button>
@@ -311,32 +317,65 @@ export default function Home() {
       {searchResponse && (
         <>
           <div className="mt-8 mb-4">
-            <Text>
+            <span>
               Search execution time: {searchResponse.executionTime.toFixed(2)}{" "}
               seconds
-            </Text>
+            </span>
             <br />
-            <Text>
+            <span>
               Total foundations in database: {searchResponse.totalVectors}
-            </Text>
+            </span>
           </div>
-          <Table
-            dataSource={searchResponse.foundations}
-            columns={columns}
-            rowKey="internalId"
-          />
+          <Table aria-label="Foundations" removeWrapper>
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn key={column.key}>{column.title}</TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={searchResponse.foundations}>
+              {(item) => (
+                <TableRow key={item.internalId}>
+                  {(columnKey) => {
+                    const columnDef = columns.find((c) => c.key === columnKey);
+                    let val = getKeyValue(
+                      item,
+                      columnDef?.dataIndex || columnKey
+                    );
+                    if (columnDef?.render) {
+                      val = columnDef.render(val, item);
+                    }
+                    return <TableCell>{val}</TableCell>;
+                  }}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </>
       )}
       <Modal
-        title={<Title level={2}>Foundation Details</Title>}
-        open={isModalVisible}
-        onOk={() => setIsModalVisible(false)}
-        onCancel={() => setIsModalVisible(false)}
-        width={800}
-        cancelButtonProps={{ style: { display: "none" } }}
+        isOpen={modalIsOpen}
+        onOpenChange={modalOnOpenChange}
+        scrollBehavior="inside"
       >
-        {selectedFoundation && renderFoundationDetails(selectedFoundation)}
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Foundation details
+              </ModalHeader>
+              <ModalBody>
+                {selectedFoundation &&
+                  renderFoundationDetails(selectedFoundation)}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onClick={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
       </Modal>
-    </div>
+    </>
   );
 }
