@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
 import { Pinecone } from "@pinecone-database/pinecone";
 import { MongoClient } from "mongodb";
-import { Foundation } from "../../types";
+import { Foundation } from "@/types";
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const pinecone = new Pinecone({
