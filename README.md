@@ -28,7 +28,7 @@ Please see https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rV
 - **Database**: MongoDB for storing foundation details
 - **Vector Search**: Pinecone for efficient similarity search
 - **NLP**: OpenAI's GPT models for text transformation and embeddings
-- **UI Components**: Ant Design
+- **UI Components**: NextUI
 
 ## How It Works
 
