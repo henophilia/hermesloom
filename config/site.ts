@@ -1,12 +1,10 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Henophilia Funding",
+  name: "Hermes' Loom",
   description:
-    "Discover the most relevant funding opportunities for your project.",
+    "Driving regenerative societal transformation through humanist artificial intelligence.",
   links: {
-    github: "https://github.com/henophilia/funding.henophilia.org",
-    strategicProposal:
-      "https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit",
+    github: "https://github.com/hermesloom/hermesloom",
   },
 };

@@ -256,12 +256,6 @@ export default function Home() {
               alt="GitHub"
             />
           </Link>
-          <Link isExternal href={siteConfig.links.strategicProposal}>
-            <img
-              src="https://img.shields.io/badge/Strategic%20proposal-4285F4?style=flat&logo=google-slides&logoColor=white"
-              alt="Strategic proposal"
-            />
-          </Link>
         </div>
       </div>
       <div className="flex flex-col flex-grow sm:flex-row sm:space-x-4">
@@ -281,8 +275,7 @@ export default function Home() {
               <p className="text-xs">
                 Check this box to allow us to save your input project
                 description in our database, so that we can use it to improve
-                this service. Please contact synergies@henophilia.org for
-                co-creation and collaboration.
+                this service.
               </p>
             </Checkbox>
           </div>

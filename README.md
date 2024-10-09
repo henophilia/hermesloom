@@ -34,7 +34,7 @@ As a very first step, we built the proof of concept for the _Thread of Wealth_. 
 2. On https://app.hermesloom.org (built with Next.js, NextUI, MongoDB, Pinecone, Vercel, OpenAI), anyone can enter any project description, which gets converted to a "hypothetical" foundation purpose.
 3. This is then matched against the purposes of all real German foundations using cosine similarity ([semantic matching](https://en.wikipedia.org/wiki/Semantic_matching)), thus presumably making it trivial to find the best foundation to fund this project.
 
-See [#2](https://github.com/henophilia/hermesloom/issues/2) as well as the slide deck [Enhancing Accessibility to Non-Profit Funding Through AI](https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit) for more details and concrete ideas for expanding this, in order to make it actually useful.
+See [#2](https://github.com/hermesloom/hermesloom/issues/2) as well as the slide deck [Enhancing Accessibility to Non-Profit Funding Through AI](https://docs.google.com/presentation/d/1dKf9l3JTdssQXnSpVuIboeOEqy9rVFIqIfidVvdiB_g/edit) for more details and concrete ideas for expanding this, in order to make it actually useful.
 
 For the _Thread of Agreement_, [Polis](https://github.com/compdemocracy/polis) can be seen as a solution which already exists, though right now, no actual collaboration has been established yet.
 
