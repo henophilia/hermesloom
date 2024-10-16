@@ -17,14 +17,16 @@ In the most general sense, this platform shall serve **capability building** and
 - appropriate legal and regulatory setup, incl. risk management as well as financial and contingency planning
 - support in governance, project management, conflict resolution etc.
 
-While many people would be incredibly motivated to work on philanthropic projects, they often actually cannot dedicate much time to these endeavors, simply because these projects wouldn't generate direct income and acquiring funding through other means (e.g. acquiring donors, writing applications to funding tenders) is simply too complex and work-intensive. At the same time, when projects start growing and complex flows of communication start emerging and well thought-out methods for decentralized conflict resolution, policy- and decision-making become essential.
+While many people would be incredibly motivated to work on philanthropic projects, they often actually cannot dedicate much time to these endeavors, simply because these projects wouldn't generate direct income and acquiring funding through other means (e.g. acquiring donors, writing applications to funding tenders) is simply too complex and work-intensive. At the same time, when projects start growing and complex flows of communication start emerging, well thought out methods for decentralized conflict resolution, policy- and decision-making become essential.
 
 Some basic principles for this project include:
 
-- Keep it open source. Licensed under the [Unlicense](https://unlicense.org/).
+- Keep it open source. Licensed under the [Unlicense](https://unlicense.org/) and all artifacts under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de).
 - Keep it non-profit. No paywalls for anything, ever.
 - Keep it globally accessible and super easy to use (no login required, multilingual interface etc.).
 - Keep it general (i.e. for all philanthropic projects, interfaith, interdisciplinary).
+
+Note that in this context, "non-profit" only refers to Hermes' Loom itself, and it does not imply that all associated projects must be dogmatically "non-commercial". For some projects assisted by Hermes' Loom in certain domains, money might be simply another useful resource to exchange and possibly to temporarily accumulate for a larger goal in a consciencious way, and of course it would be counter-productive trying to simply reject everything about capitalism. The "non-profit" character of Hermes' Loom just refers to the fact that the **ultimate purpose** of its existence is holistic regeneration (as outlined on https://hermesloom.org/), not profit maximization for a small group of individuals.
 
 ## Current status
 
