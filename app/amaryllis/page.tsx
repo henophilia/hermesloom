@@ -53,7 +53,11 @@ export default function Autocomplete() {
           </Button>
         </div>
         <div className="w-full md:w-1/2">
-          {phrases?.map((phrase) => <div key={phrase}>{phrase}</div>)}
+          {phrases?.map((phrase) => (
+            <div className="mb-2" key={phrase}>
+              {phrase}
+            </div>
+          ))}
         </div>
       </div>
     </>
