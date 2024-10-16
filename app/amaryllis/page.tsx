@@ -39,7 +39,7 @@ export default function Autocomplete() {
           <Textarea
             value={userInput}
             onValueChange={(newInput) => setUserInput(newInput)}
-            label="Wie fühlst du dich?"
+            label="Wie fühlst du dich wegen eines Narzissten?"
             placeholder="Ich fühle mich..."
             minRows={15}
             className="mb-2"
