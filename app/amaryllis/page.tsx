@@ -8,7 +8,7 @@ export default function Autocomplete() {
   const [phrases, setPhrases] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchPhrases = async (text: string) => {
+  const fetchPhrases = async () => {
     setLoading(true);
     try {
       const response = await fetch("/api/amaryllis", {
@@ -46,7 +46,7 @@ export default function Autocomplete() {
           />
           <Button
             color="primary"
-            onClick={() => fetchPhrases(userInput)}
+            onClick={() => fetchPhrases()}
             isLoading={loading}
           >
             Motivationssprüche generieren
