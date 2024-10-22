@@ -21,7 +21,7 @@ While many people would be incredibly motivated to work on philanthropic project
 
 Some basic principles for this project include:
 
-- Keep it open source. Licensed under the [Unlicense](https://unlicense.org/) and all artifacts under [CC0](https://creativecommons.org/publicdomain/zero/1.0/deed.de).
+- Keep it open source. Licensed under the [GNU GPL v3 or later](https://spdx.org/licenses/GPL-3.0-or-later.html).
 - Keep it non-profit. No paywalls for anything, ever.
 - Keep it globally accessible and super easy to use (no login required, multilingual interface etc.).
 - Keep it general (i.e. for all philanthropic projects, interfaith, interdisciplinary).

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Textarea } from "@nextui-org/react";
 import ButtonWithAction from "../_common/ButtonWithAction";
 import Heading from "../_common/Heading";
+import Body from "../_common/Body";
 
 export default function Amaryllis() {
   const [userInput, setUserInput] = useState("");
@@ -12,7 +13,7 @@ export default function Amaryllis() {
   return (
     <>
       <Heading>Amaryllis</Heading>
-      <div className="flex flex-col md:flex-row gap-4">
+      <Body>
         <div className="w-full md:w-1/2">
           <Textarea
             value={userInput}
@@ -37,7 +38,7 @@ export default function Amaryllis() {
             </div>
           ))}
         </div>
-      </div>
+      </Body>
     </>
   );
 }

@@ -18,6 +18,7 @@
 		"@react-aria/visually-hidden": "3.8.12",
 		"clsx": "2.1.1",
 		"dotenv": "^16.4.5",
+		"elevenlabs": "^0.17.1",
 		"framer-motion": "~11.1.1",
 		"fs-extra": "^11.2.0",
 		"intl-messageformat": "^10.5.0",
