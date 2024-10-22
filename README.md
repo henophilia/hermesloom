@@ -55,4 +55,4 @@ Please contact synergies@henophilia.org for collaboration and co-creation.
 
 ## License
 
-[Unlicense](https://unlicense.org/)
+[GNU GPL v3 or later](https://spdx.org/licenses/GPL-3.0-or-later.html)
