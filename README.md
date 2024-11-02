@@ -51,7 +51,7 @@ Apart from the technological developments, we are currently working on reaching 
 
 ## Co-creation
 
-Please contact synergies@henophilia.org for collaboration and co-creation.
+Please contact synergies@hermesloom.org for collaboration and co-creation.
 
 ## License
 
