@@ -6,7 +6,7 @@ Driving regenerative societal transformation through humanist artificial intelli
 
 Please see https://hermesloom.org/ for the general motivation for this project and its inherent connection to AI safety.
 
-In the most general sense, this platform shall serve **capability building** and **capability matching** purposes, with a sole focus on **philanthropic, non-profit projects**. After all, every project needs certain resources to be executed successfully, for example:
+In the most general sense, this platform shall serve **capability building** and **capability matching** purposes, with a sole focus on **philanthropic, non-profit projects**. After all, every project and eventually every community needs certain resources to be executed successfully, for example:
 
 - money
 - locations (incl. plots of land or buildings) for physically hosting spaces
