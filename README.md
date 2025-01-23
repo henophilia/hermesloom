@@ -15,7 +15,7 @@ In the most general sense, this platform shall serve **capability building** and
 - technology and tools
 - logistical support
 - appropriate legal and regulatory setup, incl. risk management as well as financial and contingency planning
-- support in governance, project management, conflict resolution etc.
+- intelligent and well-accepted structures for governance, project management, conflict resolution etc.
 
 While many people would be incredibly motivated to work on philanthropic projects, they often actually cannot dedicate much time to these endeavors, simply because these projects wouldn't generate direct income and acquiring funding through other means (e.g. acquiring donors, writing applications to funding tenders) is simply too complex and work-intensive. At the same time, when projects start growing and complex flows of communication start emerging, well thought out methods for decentralized conflict resolution, policy- and decision-making become essential.
 
